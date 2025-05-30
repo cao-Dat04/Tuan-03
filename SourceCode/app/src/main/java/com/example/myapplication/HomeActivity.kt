@@ -9,15 +9,24 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material3.SegmentedButtonDefaults.Icon
+import androidx.compose.material3.Icon
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -42,19 +51,31 @@ class HomeActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     topBar = {
+                        val onBackClick = { finish() }
                         TopAppBar(
                             title = {
                                 Text(
-                                    text = "UI Components List",
-                                    modifier = Modifier
-                                        .fillMaxWidth(),
+                                    text = "Detail",
+                                    modifier = Modifier.fillMaxWidth(),
                                     fontWeight = FontWeight.Bold,
-                                    textAlign = TextAlign.Center
+                                    textAlign = TextAlign.Center,
+                                    color = Color(0xFF2196F3)
                                 )
-                                    },
+                            },
+                            navigationIcon = {
+                                IconButton(onClick = onBackClick) {
+                                    Icon(
+                                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                        contentDescription = "Back",
+                                        tint = Color(0xFF2196F3)
+                                    )
+                                }
+                            },
+                            actions = {
+                                Spacer(modifier = Modifier.width(48.dp))
+                            },
                             colors = TopAppBarDefaults.topAppBarColors(
-                                containerColor = Color.White,
-                                titleContentColor = Color(0xFF2196F3)
+                                containerColor = Color.White
                             )
                         )
                     }
@@ -62,6 +83,7 @@ class HomeActivity : ComponentActivity() {
                     val context = LocalContext.current
                     ComponentsListScreen(
                         paddingValues = innerPadding,
+                        onBackClick = { finish() },
                         onComponentClick = { component ->
                             val intent = Intent(context, component.activityClass)
                             startActivity(intent)
@@ -81,6 +103,7 @@ sealed class ListItem {
 @Composable
 fun ComponentsListScreen(
     onComponentClick: (ListItem.ComponentItem) -> Unit,
+    onBackClick: () -> Unit,
     paddingValues: PaddingValues
 ) {
     val listItems = listOf(
@@ -96,7 +119,18 @@ fun ComponentsListScreen(
         ListItem.Header("Layout"),
         ListItem.ComponentItem("Column", "Arranges elements vertically", ColumnDetailActivity::class.java),
         ListItem.ComponentItem("Row", "Arranges elements horizontally", RowDetailActivity::class.java),
-        ListItem.ComponentItem("Box", "Arranges elements in a box", BoxDetailActivity::class.java)
+        ListItem.ComponentItem("Box", "Arranges elements in a box", BoxDetailActivity::class.java),
+
+        ListItem.Header("Detail"),
+        ListItem.ComponentItem("Detail", "Arranges elements vertically", Detail::class.java),
+        ListItem.ComponentItem("Detail", "Arranges elements horizontally", Detail::class.java),
+        ListItem.ComponentItem("Detail", "Arranges elements vertically", Detail::class.java),
+        ListItem.ComponentItem("Detail", "Arranges elements horizontally", Detail::class.java),
+        ListItem.ComponentItem("Detail", "Arranges elements vertically", Detail::class.java),
+        ListItem.ComponentItem("Detail", "Arranges elements horizontally", Detail::class.java),
+        ListItem.ComponentItem("Detail", "Arranges elements vertically", Detail::class.java),
+        ListItem.ComponentItem("Detail", "Arranges elements horizontally", Detail::class.java),
+        ListItem.ComponentItem("Detail", "Arranges elements in a box", Detail::class.java)
     )
 
     Column(
@@ -169,7 +203,7 @@ fun ComponentListItem(component: ListItem.ComponentItem, onClick: () -> Unit) {
 fun ComponentsListScreenPreview() {
     MyApplicationTheme {
         Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-            ComponentsListScreen(onComponentClick = {}, paddingValues = innerPadding)
+            ComponentsListScreen(onComponentClick = {}, onBackClick = {}, paddingValues = innerPadding)
         }
     }
 }

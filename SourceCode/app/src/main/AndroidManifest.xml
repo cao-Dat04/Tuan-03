@@ -53,6 +53,9 @@
         <activity
             android:name=".BoxDetailActivity"
             android:exported="false"/>
+        <activity
+            android:name=".Detail"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -111,7 +111,7 @@ fun SlashScreenContent(paddingValues: PaddingValues, onReadyButtonClick: () -> U
             )
         ) {
             Text(
-                text = "I'm ready!",
+                text = "Root",
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
